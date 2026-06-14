@@ -53,4 +53,5 @@ jobs:
           MYSQL_USER: kinga
           MYSQL_PASSWORD: kinga
           MYSQL_DATABASE: kinga
-        run: python -m src.kinga_scraper.run
+        run: |
+          python -m src.kinga_scraper.import_example
