@@ -1,0 +1,32 @@
+<jobs>
+  <job>
+    <source_id>1</source_id>
+    <title>Senior Nurse</title>
+    <company>OLVG</company>
+    <location>Amsterdam</location>
+    <description_full>Senior nurse position in care team</description_full>
+    <posted_date>2026-06-14</posted_date>
+    <url>https://example.com/job/1</url>
+    <salary>€3.500 per maand</salary>
+    <remote>hybrid</remote>
+    <sector>Healthcare</sector>
+    <position_type>full-time</position_type>
+    <status>new</status>
+    <priority>medium</priority>
+  </job>
+  <job>
+    <source_id>1</source_id>
+    <title>Health Coach</title>
+    <company>Basic-Fit</company>
+    <location>Rotterdam</location>
+    <description_full>Health coach for wellness program</description_full>
+    <posted_date>2026-06-13</posted_date>
+    <url>https://example.com/job/2</url>
+    <salary>€45k - €55k</salary>
+    <remote>full</remote>
+    <sector>Sport</sector>
+    <position_type>full-time</position_type>
+    <status>new</status>
+    <priority>high</priority>
+  </job>
+</jobs>
