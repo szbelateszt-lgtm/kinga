@@ -24,15 +24,21 @@ def init_schema():
         port=MYSQL_PORT,
         user=MYSQL_USER,
         password=MYSQL_PASSWORD,
+        database=MYSQL_DATABASE,
         charset='utf8mb4',
         use_unicode=True,
     )
     conn.autocommit = True
     cursor = conn.cursor()
+
     for statement in schema_sql.split(';'):
         statement = statement.strip()
         if not statement:
             continue
+        normalized = statement.lower()
+        if normalized.startswith('create database') or normalized.startswith('use '):
+            continue
         cursor.execute(statement)
+
     cursor.close()
     conn.close()
