@@ -13,6 +13,17 @@ from .models import NormalizedJob
 from .normalizers import normalize_location, normalize_salary, normalize_remote
 
 
+class ImportScraper(BaseScraper):
+    def __init__(self, source_id: int = 0):
+        super().__init__(source_id)
+
+    def fetch_listings(self):
+        raise NotImplementedError('ImportScraper does not implement fetch_listings')
+
+    def parse_listing(self, raw):
+        raise NotImplementedError('ImportScraper does not implement parse_listing')
+
+
 def download_source(source_url: str, destination: str) -> str:
     response = requests.get(source_url, timeout=30)
     response.raise_for_status()
@@ -84,7 +95,7 @@ def build_job(record: dict[str, Any]) -> NormalizedJob:
         status=(record.get('status') or 'new').strip() or 'new',
         priority=(record.get('priority') or 'medium').strip() or 'medium',
     )
-    job.data_quality_score = BaseScraper(source_id or 0).compute_data_quality(job)
+    job.data_quality_score = ImportScraper(source_id or 0).compute_data_quality(job)
     return job
 
 
@@ -109,11 +120,12 @@ def import_source(path_or_url: str, fmt: str | None = None) -> dict[str, int]:
     conn = get_connection()
     imported = 0
     duplicates = 0
+    importer = ImportScraper(source_id=0)
     for row in records:
         if not row.get('title'):
             continue
         job = build_job(row)
-        _, inserted = BaseScraper(source_id=job.source_id or 0).save_job(job, conn)
+        _, inserted = importer.save_job(job, conn)
         if inserted:
             imported += 1
         else:
